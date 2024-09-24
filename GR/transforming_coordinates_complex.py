@@ -19,19 +19,20 @@ r0 = 1
 labels =[]
 
 # Cartesian plane creation function(2D)
-def create_cartesian(origin, xlabel, ylabel):
+def create_cartesian(origin, xlabel, ylabel, title):
     x_axis = arrow(pos=origin, axis=vector(axis_length, 0, 0), color=color.red, shaftwidth=min_x)
     y_axis = arrow(pos=origin, axis=vector(0, axis_length, 0), color=color.green, shaftwidth=min_x)
     neg_y_axis = arrow(pos=origin, axis=vector(0, -axis_length, 0), color=color.green, shaftwidth=min_x)
     neg_x_axis = arrow(pos=origin, axis=vector(-axis_length, 0, 0), color=color.red, shaftwidth=min_x)
     labels.append(label(pos=origin + vector(axis_length, 0, 0), text=xlabel, xoffset=0, yoffset=10, space=20, height=20, box = False, line = False))
     labels.append(label(pos=origin + vector(0, axis_length, 0), text=ylabel, xoffset=10, yoffset=0, space=20, height=20, box = False, line = False))
+    labels.append(label(pos=origin + vector(-axis_length, 1.5*axis_length, 0), text=title, xoffset=10, yoffset=0, space=20, height=20, box = False, line = False))
     return(x_axis, neg_x_axis, y_axis, neg_y_axis)
 
 #Create Cartesian planes (2D)
-(x1_positive, x1_negative, y1_positive, y1_negative) = create_cartesian(origin1, "x", "y")
-(x2_positive, x2_negative, y2_positive, y2_negative) = create_cartesian(origin2, "Theta", "r")
-(x3_positive, x3_negative, y3_positive, y3_negative) = create_cartesian(origin3, "x", "y")
+(x1_positive, x1_negative, y1_positive, y1_negative) = create_cartesian(origin1, "x", "y", "Observer can see x,y")
+(x2_positive, x2_negative, y2_positive, y2_negative) = create_cartesian(origin2, "Theta", "r", "Observer can see r, theta")
+(x3_positive, x3_negative, y3_positive, y3_negative) = create_cartesian(origin3, "x", "y", "Observer can only see r")
 
 #variables for later use
 positive_x = x1_positive.axis
@@ -76,8 +77,8 @@ def rotating_frame_update():
     y3_negative.axis = vector(positive_x.x*cos(-rotation_angle), positive_x.x*sin(-rotation_angle), 0)
 
     #Calculated manually, fix later
-    labels[4].pos = origin3 + x3_positive.axis
-    labels[5].pos = origin3 + y3_positive.axis
+    labels[6].pos = origin3 + x3_positive.axis
+    labels[7].pos = origin3 + y3_positive.axis
     radius3.axis = vector(0, mag(radius.axis), 0)
     object_sphere_observer.pos.y = radius3.axis.y
 
